@@ -15,10 +15,10 @@
 // ─── USER CONFIGURATION ──────────────────────────────────────────
 // Change these before flashing!
 
-#define MICROS_USERNAME     "admin"
-#define MICROS_PASSWORD     "change-me-now"
-#define MICROS_HOSTNAME     "esp32-webos"
-#define AP_MDNS_HOSTNAME    "esp32-connect"
+#define WEBOS_USERNAME      "admin"
+#define WEBOS_PASSWORD      "change-me-now"
+#define WEBOS_HOSTNAME      "webos-32"
+#define AP_MDNS_HOSTNAME    "connect-webos-32"
 
 // Preferred LAN boot mode (STA): set your home/office Wi-Fi here.
 // If NVS already has credentials, those override these defaults.
@@ -30,8 +30,8 @@
 #define STA_AUTOCONNECT_ON_BOOT 0
 
 // AP fallback (if Wi-Fi connect fails, ESP-32 opens its own hotspot)
-#define AP_SSID             "ESP32-MicroOS"
-#define AP_PASSWORD         "micros123"
+#define AP_SSID             "ESP32-WebOS-32"
+#define AP_PASSWORD         "webos123"
 #define AP_CHANNEL          6
 #define AP_HIDDEN           0
 #define AP_MAX_CLIENTS      4
@@ -102,13 +102,13 @@ int      totalPins = 0;
 String   sessionToken = "";
 unsigned long sessionLastSeenMs = 0;
 
-const char INDEX_HTML[] PROGMEM = R"MICROS(
+const char INDEX_HTML[] PROGMEM = R"WEBOS(
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ESP-32 MicroOS</title>
+<title>WebOS-32</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
@@ -715,7 +715,7 @@ body.nightlight::after{
 <!-- ── AUTH SCREEN ── -->
 <div id="auth">
   <div class="auth-box">
-    <div class="auth-logo">ESP-32 MicroOS</div>
+    <div class="auth-logo">WebOS-32</div>
     <div class="auth-sub">v1.0.0 · secure access</div>
     <div class="form-group">
       <label class="form-label">username</label>
@@ -735,7 +735,7 @@ body.nightlight::after{
   <!-- topbar -->
   <div class="topbar">
     <div class="tb-left">
-      <span class="tb-logo">MicroOS</span>
+      <span class="tb-logo">WebOS-32</span>
       <span class="tb-time" id="clock">--:--</span>
     </div>
     <div class="tb-right">
@@ -815,7 +815,7 @@ body.nightlight::after{
           </div>
           <div class="term term-compact">
             <div class="term-body term-body-compact" id="qt-body">
-              <div class="t-line t-info">[boot] MicroOS connecting...</div>
+              <div class="t-line t-info">[boot] WebOS-32 connecting...</div>
             </div>
             <div class="term-in-row">
               <span class="term-prompt">dash$</span>
@@ -868,7 +868,7 @@ body.nightlight::after{
         <div class="card span-6">
           <div class="card-title">bluetooth settings</div>
           <div class="srow">
-            <div class="srow-info"><span class="srow-main">Device name</span><span class="srow-sub" id="bt-name">ESP32-MicroOS</span></div>
+            <div class="srow-info"><span class="srow-main">Device name</span><span class="srow-sub" id="bt-name">ESP32-WebOS-32</span></div>
           </div>
           <div class="srow">
             <div class="srow-info"><span class="srow-main">Status</span><span class="srow-sub">scan list is UI demo (no hardware pairing yet)</span></div>
@@ -994,7 +994,7 @@ body.nightlight::after{
       </div>
       <div class="card span-12">
         <div class="card-title">about</div>
-        <div class="srow"><span class="srow-main">Firmware</span><span class="badge badge-b">MicroOS v1.0.0</span></div>
+        <div class="srow"><span class="srow-main">Firmware</span><span class="badge badge-b">WebOS-32 v1.0.0</span></div>
         <div class="srow"><span class="srow-main">Framework</span><span class="badge badge-gray">ESP-IDF v5.x / Arduino</span></div>
         <div class="srow"><span class="srow-main">Chip</span><span class="badge badge-gray">ESP32</span></div>
         <div class="srow"><span class="srow-main">Flash size</span><span class="badge badge-gray">4 MB</span></div>
@@ -1035,7 +1035,7 @@ let nightlightOn = false;
 let airplaneOn = false;
 const FULL_TERMINAL_MAX_LINES = 550;
 const QUICK_TERMINAL_MAX_LINES = 140;
-const TOKEN_STORAGE_KEY = 'micros.token';
+const TOKEN_STORAGE_KEY = 'webos-32.token';
 const ENABLE_DEMO_MODE = false;
 const DEFAULT_API_TIMEOUT_MS = 8000;
 
@@ -1873,7 +1873,7 @@ restoreSession();
 </script>
 </body>
 </html>
-)MICROS";
+)WEBOS";
 
 // ─── HMAC TOKEN ──────────────────────────────────────────────────
 String generateToken(const String& user) {
@@ -2005,7 +2005,7 @@ void stopMdnsIfRunning() {
 }
 
 const char* desiredMdnsHostname() {
-  if (WiFi.status() == WL_CONNECTED) return MICROS_HOSTNAME;
+  if (WiFi.status() == WL_CONNECTED) return WEBOS_HOSTNAME;
   if (isApModeActive()) return AP_MDNS_HOSTNAME;
   return nullptr;
 }
@@ -2483,7 +2483,7 @@ void setupRoutes() {
         if (!parseJsonBody(req, data, len, index, total, doc)) return;
             String user = doc["username"] | "";
             String pass = doc["password"] | "";
-            if (user == MICROS_USERNAME && pass == MICROS_PASSWORD) {
+            if (user == WEBOS_USERNAME && pass == WEBOS_PASSWORD) {
                 sessionToken = generateToken(user);
                 sessionLastSeenMs = millis();
                 JsonDocument res;
@@ -2726,11 +2726,11 @@ void setupRoutes() {
 // ─── SETUP ───────────────────────────────────────────────────────
 void setup() {
     Serial.begin(115200);
-    Serial.println("\n[boot] ESP-32 MicroOS starting...");
+    Serial.println("\n[boot] WebOS-32 starting...");
     bootMillis = millis();
 
-    if (strcmp(MICROS_PASSWORD, "change-me-now") == 0) {
-      Serial.println("[sec] WARNING: MICROS_PASSWORD is default placeholder. Change it before production use.");
+    if (strcmp(WEBOS_PASSWORD, "change-me-now") == 0) {
+      Serial.println("[sec] WARNING: WEBOS_PASSWORD is default placeholder. Change it before production use.");
     }
     if (strcmp(TOKEN_SECRET, "replace-with-long-random-token-secret") == 0) {
       Serial.println("[sec] WARNING: TOKEN_SECRET is placeholder. Set a long random secret before production use.");
@@ -2756,7 +2756,7 @@ void setup() {
 
     // Wi-Fi first (non-blocking), so TCP/IP stack is initialized before server.begin().
     if (!airplaneMode) {
-        WiFi.setHostname(MICROS_HOSTNAME);
+        WiFi.setHostname(WEBOS_HOSTNAME);
         String bootSsid = savedSSID.isEmpty() ? String(STA_DEFAULT_SSID) : savedSSID;
         String bootPass = savedSSID.isEmpty() ? String(STA_DEFAULT_PASSWORD) : savedPass;
 
@@ -2801,7 +2801,7 @@ void setup() {
     server.begin();
     Serial.println("[boot] HTTP server started on port 80");
 
-    Serial.println("[boot] MicroOS ready!");
+    Serial.println("[boot] WebOS-32 ready!");
 }
 
 // ─── LOOP ────────────────────────────────────────────────────────

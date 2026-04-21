@@ -1,4 +1,4 @@
-# ESP32 WebOS (Arduino IDE)
+# WebOS-32 (Arduino IDE)
 
 A full-featured ESP32 web control panel firmware with:
 - AP-first onboarding flow
@@ -14,11 +14,11 @@ This project is designed to boot into hotspot mode first, let you onboard Wi-Fi 
 
 ### Screenshot
 
-![ESP32 WebOS UI](src/image/webos.png)
+![WebOS-32 UI](src/image/webos.png)
 
 ### Demo Video
 
-- Watch the demo on YouTube: [ESP32 WebOS Demo](https://youtu.be/63n1ate2iyo)
+- Watch the demo on YouTube: [WebOS-32 Demo](https://youtu.be/63n1ate2iyo)
 
 ---
 
@@ -28,13 +28,13 @@ This project is designed to boot into hotspot mode first, let you onboard Wi-Fi 
 - ESP32 starts hotspot
 - Connect your phone/laptop to ESP32 AP
 - Open dashboard using:
-  - `http://esp32-connect.local` (preferred)
+  - `http://connect-webos-32.local` (preferred)
   - `http://192.168.4.1` (always fallback)
 
 ### STA mode (after joining home router from dashboard)
 - ESP32 joins your router
 - Access from devices on same LAN:
-  - `http://esp32-webos.local`
+  - `http://webos-32.local`
   - or STA IP from serial log
 
 ---
@@ -86,13 +86,13 @@ This project is designed to boot into hotspot mode first, let you onboard Wi-Fi 
 
 ## Important Configuration
 
-Open `ESP32_WEBOS_ArduinoIDE.ino` and review these first:
+Open `WebOS-32.ino` and review these first:
 
-- `MICROS_USERNAME`
-- `MICROS_PASSWORD`
+- `WEBOS_USERNAME`
+- `WEBOS_PASSWORD`
 - `TOKEN_SECRET`
-- `MICROS_HOSTNAME` (STA mDNS: `esp32-webos`)
-- `AP_MDNS_HOSTNAME` (AP mDNS: `esp32-connect`)
+- `WEBOS_HOSTNAME` (STA mDNS: `webos-32`)
+- `AP_MDNS_HOSTNAME` (AP mDNS: `connect-webos-32`)
 - `AP_SSID`, `AP_PASSWORD`
 - `STA_AUTOCONNECT_ON_BOOT` (currently AP-first mode)
 
@@ -106,7 +106,7 @@ Open `ESP32_WEBOS_ArduinoIDE.ino` and review these first:
 ## Build and Flash (Arduino IDE)
 
 1. Open Arduino IDE.
-2. Open `ESP32_WEBOS_ArduinoIDE.ino`.
+2. Open `WebOS-32.ino`.
 3. Select your ESP32 board from Tools > Board.
 4. Select correct COM port from Tools > Port.
 5. Verify (compile).
@@ -121,18 +121,18 @@ Open `ESP32_WEBOS_ArduinoIDE.ino` and review these first:
 2. In Serial Monitor, confirm logs like:
    - `[wifi] AP: ...`
    - `[net] AP URL: http://192.168.4.1`
-   - `[net] AP mDNS target: http://esp32-connect.local`
-3. Connect laptop/phone to AP SSID (default: `ESP32-MicroOS`).
-4. Open dashboard (`esp32-connect.local` or `192.168.4.1`).
+  - `[net] AP mDNS target: http://connect-webos-32.local`
+3. Connect laptop/phone to AP SSID (default: `ESP32-WebOS-32`).
+4. Open dashboard (`connect-webos-32.local` or `192.168.4.1`).
 5. Login.
 6. Go to Wi-Fi page and connect to your router.
-7. After STA connects, use `esp32-webos.local` on same LAN.
+7. After STA connects, use `webos-32.local` on same LAN.
 
 ---
 
 ## Login
 
-Default username is set in config (`MICROS_USERNAME`).
+Default username is set in config (`WEBOS_USERNAME`).
 
 Default password is placeholder (`change-me-now`) and should be changed before real use.
 
@@ -220,13 +220,13 @@ WebSocket channels:
 
 ## Troubleshooting
 
-### 1) `esp32-connect.local` does not open in AP mode
+### 1) `connect-webos-32.local` does not open in AP mode
 - Confirm connected to ESP32 hotspot.
 - Check serial for AP heartbeat and clients count.
 - Try fallback URL: `http://192.168.4.1`.
 - Some clients still handle `.local` differently; AP IP is always valid fallback.
 
-### 2) `esp32-webos.local` does not open in STA mode
+### 2) `webos-32.local` does not open in STA mode
 - Ensure ESP32 is connected to router (`connected: yes` in serial).
 - Ensure your device is on same LAN.
 - Try STA IP directly from serial.
@@ -246,7 +246,7 @@ WebSocket channels:
 
 ## Project Structure
 
-- `ESP32_WEBOS_ArduinoIDE.ino` : main firmware and embedded Web UI
+- `WebOS-32.ino` : main firmware and embedded Web UI
 - `src/image/webos.png` : screenshot asset
 - YouTube demo: https://youtu.be/63n1ate2iyo
 
